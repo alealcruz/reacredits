@@ -17,7 +17,8 @@ public class Disclaimer {
 			+ "EXCEPT UNDER THIS DISCLAIMER.\n\n"
 			+ "LICENSE: CC-BY-SA\n"
 			+ "AUTHOR: Alejandro Leal Cruz\n"
-			+ "Version: 20220323-alpha1.0\n\n";
+			+ "First version: 20220323-alpha1.0\n"
+			+ "Current version: 20220714-alpha1.0\n\n";
 	
 	public static String getDisclaimerText() {
 		return text_Disclaimer;
