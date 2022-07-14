@@ -2,6 +2,7 @@ package org.alealcruz.creditsbuilder.misc;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Instructions {
@@ -10,7 +11,7 @@ public class Instructions {
 	
 	
 	
-	public static void invokation( Set<String> set, String xmlFromInvokation, String outputFileName, String imgPattern, String vidPattern, String reaPattern, String[] args) {
+	public static void invokation( Set<String> set, Map<String,String> map, String xmlFromInvokation, String outputFileName, String imgPattern, String vidPattern, String reaPattern, String[] args) {
 
 		boolean enc = false;
 		int i = 0;
@@ -35,8 +36,9 @@ public class Instructions {
 				}
 			}else
 				System.out.println("Nothing related with XML input file name was specified so '" + xmlFromInvokation +  "' XML default file name will be used");
+			map.put("xml", xmlFromInvokation);
 			
-			enc = false;
+			enc = false;i = 0;
 			if(set.contains("-output")) {
 				while(!enc && i<args.length) {
 					if(args[i].contains("-output") && (i+1)<args.length && args[i]!=null) {
@@ -47,8 +49,9 @@ public class Instructions {
 				}
 			}else
 				System.out.println("Nothing related with output file name was specified so '" + outputFileName +  "_TIMESTAMP.xml' output default file name will be used");
+			map.put("output", outputFileName);
 			
-			enc = false;
+			enc = false;i = 0;
 			if(set.contains("-img")) {
 				while(!enc && i<args.length) {
 					if(args[i].contains("-img") && (i+1)<args.length && args[i]!=null) {
@@ -59,8 +62,9 @@ public class Instructions {
 				}
 			}else
 				System.out.println("Nothing related with image pattern was specified so 'IMG_MAT6PRI_' text will be used");
+			map.put("img", imgPattern);
 			
-			enc = false;
+			enc = false;i = 0;
 			if(set.contains("-vid")) {
 				while(!enc && i<args.length) {
 					if(args[i].contains("-vid") && (i+1)<args.length && args[i]!=null) {
@@ -71,8 +75,9 @@ public class Instructions {
 				}
 			}else
 				System.out.println("Nothing related with video pattern was specified so 'VID_MAT6PRI_' text will be used");
+			map.put("vid", vidPattern);
 			
-			enc = false;
+			enc = false;i = 0;
 			if(set.contains("-rea")) {
 				while(!enc && i<args.length) {
 					if(args[i].contains("-rea") && (i+1)<args.length && args[i]!=null) {
@@ -83,6 +88,7 @@ public class Instructions {
 				}
 			}else
 				System.out.println("Nothing related with image pattern was specified so 'IMG_MAT6PRI_' text will be used");
+			map.put("rea", reaPattern);
 		}
 		
 		System.out.println("Example: --> java -jar creditsBuilder.jar -xml contentv3.xml -output creditsREAXX -img IMG_MAT6PRI_ -vid VID_MAT6PRI_ -rea REA03_");
