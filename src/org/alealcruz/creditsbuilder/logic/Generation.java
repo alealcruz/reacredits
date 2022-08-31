@@ -116,7 +116,7 @@ public class Generation {
 	
 	public static String textElementAssociated(Credit item) {
 		String result = "";
-		if (item.getResource().contains("VID_MAT6PRI_REA")) { // VID
+		if (item.getResource().contains("VID_")) { //if (item.getResource().contains("VID_MAT6PRI_REA")) { // VID
 			result = "<figure class=\"exe-figure exe-image position-center license-CC-BY-NC-SA\" style=\"text-align: center;\"><video width=\"300\" height=\"150\" style=\"display: block; margin-left: auto; margin-right: auto; height: 140px; width: 196px;\" hspace=\"auto\" controls=\"controls\" class=\"mediaelement\"> <source src=\"";
 			result = result + item.getResource();
 			result = result + "\" type=\"video/mp4\" /></video> <figcaption class=\"figcaption\"><span style=\"font-size: 10pt;\"><span class=\"author\">Elaboración propia</span>. <span class=\"title\"><em>El reto: Pon en marcha tu empresa</em></span> <span class=\"license\"><span class=\"sep\">(</span><a href=\"http://creativecommons.org/licenses/?lang=es\" rel=\"license nofollow noopener\" target=\"_blank\" title=\"Creative Commons BY-NC-SA\">CC BY-NC-SA</a><span class=\"sep\">)</span></span></span></figcaption> </figure>";
@@ -124,7 +124,10 @@ public class Generation {
 			result = "<figure class=\"exe-figure exe-image position-center license-CC-BY-NC-SA\" style=\"text-align: center;\"><img src=\"";
 			result = result + item.getResource() + "\" alt=\"" + item.getAlt() + "\" ";
 			result = result
-					+ " title=\"Portada\" hspace=\"auto\" style=\"height: 140px; display: block; margin-left: auto; margin-right: auto;\" /> <figcaption class=\"figcaption\"><span style=\"font-size: 10pt;\"><span class=\"author\">Elaboración propia</span>. <span class=\"title\"><em>Portada para los REA del tercer ciclo de Matemáticas de Educación Primaria</em></span> <span class=\"license\"><span class=\"sep\">(</span><a href=\"http://creativecommons.org/licenses/?lang=es\" rel=\"license nofollow noopener\" target=\"_blank\" title=\"Creative Commons BY-NC-SA\">CC BY-NC-SA</a><span class=\"sep\">)</span></span></span></figcaption> </figure>";
+					//+ " title=\"Portada\" hspace=\"auto\" style=\"height: 140px; display: block; margin-left: auto; margin-right: auto;\" /> <figcaption class=\"figcaption\"><span style=\"font-size: 10pt;\"><span class=\"author\">Elaboración propia</span>. <span class=\"title\"><em>Portada para los REA del tercer ciclo de Matemáticas de Educación Primaria</em></span> <span class=\"license\"><span class=\"sep\">(</span><a href=\"http://creativecommons.org/licenses/?lang=es\" rel=\"license nofollow noopener\" target=\"_blank\" title=\"Creative Commons BY-NC-SA\">CC BY-NC-SA</a><span class=\"sep\">)</span></span></span></figcaption> </figure>";
+					//+ " title=\"Portada\" hspace=\"auto\" style=\"height: 140px; display: block; margin-left: auto; margin-right: auto;\" /> <figcaption class=\"figcaption\"><span style=\"font-size: 10pt;\"><span class=\"author\">Elaboración propia</span>. <span class=\"title\"><em>Portada para los REA del tercer ciclo de Matemáticas de Educación Primaria</em></span> <span class=\"license\"><span class=\"sep\">(</span><a href=\"http://creativecommons.org/licenses/?lang=es\" rel=\"license nofollow noopener\" target=\"_blank\" title=\"Creative Commons BY-NC-SA\">CC BY-NC-SA</a><span class=\"sep\">)</span></span></span></figcaption> </figure>";
+					+ " title=\"" + item.getTitle() + "\" hspace=\"auto\" style=\"height: 140px; display: block; margin-left: auto; margin-right: auto;\" /> <figcaption class=\"figcaption\"><span style=\"font-size: 10pt;\"><span class=\"author\">Elaboración propia</span>. <span class=\"title\"><em>" + item.getTitle() + "</em></span> <span class=\"license\"><span class=\"sep\">(</span><a href=\"http://creativecommons.org/licenses/?lang=es\" rel=\"license nofollow noopener\" target=\"_blank\" title=\"Creative Commons BY-NC-SA\">CC BY-NC-SA</a><span class=\"sep\">)</span></span></span></figcaption> </figure>";
+			
 		}
 		return result;
 	}
@@ -294,6 +297,7 @@ public class Generation {
 		String item = "";
 		String itemBefore = "";
 		int altText, endingAltText;
+		int titleText, endingTitleText;
 
 		for (int i = 0; i < elements.size() && (includingPictograms?true:pageNumber !=2); i++) {
 			item = elements.get(i).replace("\n", "");
@@ -305,11 +309,20 @@ public class Generation {
 				everything = before.replace("\n", "") + searchTag + after.replace("\n", "") + finishingTag;
 				altText = everything.indexOf("alt=&quot;") + 10;
 				endingAltText = (everything.substring(altText)).indexOf("&quot;") + altText;
-				if (everything.indexOf("resources/IMG") != -1) {
+				
+				//code for get title parameter from HTML
+				titleText = everything.indexOf("title=&quot;") + 12;
+				endingTitleText = (everything.substring(titleText)).indexOf("&quot;") + titleText;
+				
+				if (everything.indexOf("resources/"+searchTag.split("_")[0]) != -1) {
+				//if (everything.indexOf("resources/IMG") != -1) {
 					imageAux = new Credit(
-							everything.substring(everything.indexOf("resources/IMG"),
-									everything.indexOf(("&quot;"), everything.indexOf("resources/IMG"))),
-							everything.substring(altText, endingAltText), pageNumber);
+							everything.substring(everything.indexOf("resources/"+searchTag.split("_")[0]),
+						    //everything.substring(everything.indexOf("resources/IMG"),
+									everything.indexOf(("&quot;"), everything.indexOf("resources/"+searchTag.split("_")[0]))),
+									//everything.indexOf(("&quot;"), everything.indexOf("resources/IMG"))),
+							everything.substring(altText, endingAltText), pageNumber,
+							everything.substring(titleText, endingTitleText));
 					items.add(imageAux);
 				}
 			}
