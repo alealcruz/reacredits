@@ -5,11 +5,19 @@ public class Credit implements Comparable<Credit>{
 	private String resource;
 	private int page;
 	private String alt;
+	private String title;
 	
 	public Credit(String resource, String alt, int page) {
 		this.resource = resource;
 		this.alt = alt;
 		this.page = page;
+	}
+	
+	public Credit(String resource, String alt, int page, String title) {
+		this.resource = resource;
+		this.alt = alt;
+		this.page = page;
+		this.title = title;
 	}
 
 	public String getResource() {
@@ -35,6 +43,14 @@ public class Credit implements Comparable<Credit>{
 	public void setPage(int page) {
 		this.page = page;
 	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	public int compareTo(Credit item) {
 		return Integer.toString(getPage()).compareTo(Integer.toString(item.getPage()));
@@ -49,7 +65,7 @@ public class Credit implements Comparable<Credit>{
 	
 	@Override
 	public String toString() {
-		return "page: " + getPage() + " | resource: " + getResource() + " | alt: " + getAlt();
+		return "page: " + getPage() + " | resource: " + getResource() + " | alt: " + getAlt() + " | title: " + getTitle();
 	}
 
 }
